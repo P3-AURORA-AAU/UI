@@ -22,17 +22,17 @@ function Movement() {
             <span className={"text-xs font-mono text-muted-foreground border-b p-1"}>MOVEMENT</span>
             <div className={"grid grid-cols-3 gap-1.5"}>
                 <div/>
-                <StyledButton className={"h-14"}>
+                <StyledButton className={"h-10"}>
                     <ArrowUp className={"size-6"}/>
                 </StyledButton>
                 <div/>
-                <StyledButton className={"h-14"}>
+                <StyledButton className={"h-10"}>
                     <ArrowLeft className={"size-6"}/>
                 </StyledButton>
-                <StyledButton className={"h-14"}>
+                <StyledButton className={"h-10"}>
                     <ArrowDown className={"size-6"}/>
                 </StyledButton>
-                <StyledButton className={"h-14"}>
+                <StyledButton className={"h-10"}>
                     <ArrowRight className={"size-6"}/>
                 </StyledButton>
             </div>

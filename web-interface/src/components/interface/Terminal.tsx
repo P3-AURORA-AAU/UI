@@ -35,7 +35,7 @@ export default function Terminal() {
     return (
         <Window title={"TERMINAL"} className={"flex-1 gap-0"}>
             <div className={"flex flex-col h-full"}>
-                <div className={"font-mono overflow-y-auto text-xs bg-black/20 p-3 flex-1 max-h-56 scrollbar-thin" +
+                <div className={"font-mono overflow-y-auto text-xs  p-3 flex-1 max-h-56 scrollbar-thin" +
                     " scrollbar-track-background scrollbar-thumb-primary/50"}>
                     {lines.map((line, i) => (
                         <div key={i} className={
