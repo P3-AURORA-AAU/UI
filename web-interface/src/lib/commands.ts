@@ -8,7 +8,7 @@ export interface Command {
     name: string,
     description: string,
     aliases?: string[],
-    execute: (args?: string[]) => CommandOutput | Promise<CommandOutput>,
+    execute: (prevState: TerminalLine[], args?: string[]) => CommandOutput | Promise<CommandOutput>,
 }
 
 export const TerminalCommands: Command[] = [
@@ -16,8 +16,9 @@ export const TerminalCommands: Command[] = [
         name: "help",
         description: "shows available commands",
         aliases: ["h"],
-        execute:  () => ({
+        execute:  (prevState) => ({
             lines: [
+                ...prevState,
                 {type: "output", content: "Available commands:"},
                 ...TerminalCommands.map(command => ({
                         type: "output" as const,
@@ -25,5 +26,24 @@ export const TerminalCommands: Command[] = [
                     }))
             ]
         })
-    }
+    },
+    {
+        name: "reset",
+        description: "resets the terminal",
+        aliases: ["r"],
+        execute: () => ({
+            lines: [
+                {type: "output", content: "AURORA TERMINAL v1.0"},
+                {type: "output", content: "Type 'help' for commands"},
+            ]
+        })
+    },
+    {
+        name: "clear",
+        description: "clears the terminal",
+        aliases: ["c"],
+        execute: () => ({
+            lines: []
+        })
+    },
 ]

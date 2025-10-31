@@ -11,7 +11,7 @@ export interface TerminalLine {
 
 export default function Terminal() {
     const [lines, setLines] = useState<TerminalLine[]>([
-        {type: "output", content: "AURORA TERMINAL v1.0"},
+        {type: "output", content: "AURORA TERMINAL v1.1"},
         {type: "output", content: "Type 'help' for commands"},
     ]);
     const [input, setInput] = useState<string>("");
@@ -35,7 +35,7 @@ export default function Terminal() {
             return;
         }
 
-        const commandResult = command.execute(args)
+        const commandResult = command.execute(lines, args)
         let output: TerminalLine[]
         // wait if promise
         if (commandResult instanceof Promise) {
@@ -45,7 +45,7 @@ export default function Terminal() {
         }
 
 
-        setLines((prevState) => [...prevState, ...output])
+        setLines(output)
 
     }
 
