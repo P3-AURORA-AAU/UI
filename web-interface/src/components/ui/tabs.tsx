@@ -40,7 +40,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-          "border-primary/50 hover:border-primary hover:bg-primary/20 hover:text-primary bg-transparent" +
+          "border-primary/50 hover:border-primary hover:bg-primary/20 hover:text-primary bg-transparent transition-all duration-200" +
           " data-[state=active]:bg-primary/10 data-[state=active]:border-primary/50 border py-3 data-[state=active]:text-foreground" +
           " data-[state=active]:bg-primary/10 data-[state=active]:border-primary/50" +
           " active:bg-primary/50 active:text-secondary data-[state=active]:active:bg-primary/50 data-[state=active]:active:text-secondary" +

@@ -66,7 +66,7 @@ export default function Terminal() {
                             // fucked up ternary :sob: TODO: maybe do this better lol, or idk honestly who cares
                             line.type === "input" ? "text-primary" :
                                 line.type === "error" ? "text-destructive" :
-                                    "text-foreground/80"
+                                    "text-foreground/80 whitespace-break-spaces"
                         }>{line.content}</div>
                     ))}
                 </div>

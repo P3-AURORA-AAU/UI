@@ -48,4 +48,18 @@ export const TerminalCommands: Command[] = [
             lines: []
         })
     },
+    {
+        name: "cat",
+        description: "prints the contents of a file (or something)",
+        execute: (prevState) => ({
+            lines: [
+                ...prevState,
+                {type: "output", content: ""},
+                {type: "output", content: "  /\\_/\\  "},
+                {type: "output", content: " ( o.o ) "},
+                {type: "output", content: "  > ^ <  "},
+                {type: "output", content: ""},
+            ]
+        })
+    }
 ]
