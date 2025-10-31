@@ -28,6 +28,8 @@ export const TerminalCommands: Command[] = [
         })
     },
     {
+        // right now the reset is basically just clear but with some output added.
+        // however might add stuff later
         name: "reset",
         description: "resets the terminal",
         aliases: ["r"],

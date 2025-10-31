@@ -11,7 +11,7 @@ export interface TerminalLine {
 
 export default function Terminal() {
     const [lines, setLines] = useState<TerminalLine[]>([
-        {type: "output", content: "AURORA TERMINAL v1.1"},
+        {type: "output", content: "AURORA TERMINAL v1.2"},
         {type: "output", content: "Type 'help' for commands"},
     ]);
     const [input, setInput] = useState<string>("");
@@ -23,7 +23,8 @@ export default function Terminal() {
         const args = parsedCommand.slice(1);
 
         // add input to terminal
-        setLines((prevState) => [...prevState, {type: "input", content: `> ${inputText}`}]);
+        const lineWithInput: TerminalLine[] = [...lines, {type: "input", content: `> ${inputText}`}];
+        setLines(lineWithInput);
 
         // check if command exists
         const command = TerminalCommands.find(command => (
@@ -35,7 +36,7 @@ export default function Terminal() {
             return;
         }
 
-        const commandResult = command.execute(lines, args)
+        const commandResult = command.execute(lineWithInput, args)
         let output: TerminalLine[]
         // wait if promise
         if (commandResult instanceof Promise) {
@@ -49,10 +50,10 @@ export default function Terminal() {
 
     }
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        handleCommand(input)
         setInput("");
+        await handleCommand(input)
     }
 
     return (
