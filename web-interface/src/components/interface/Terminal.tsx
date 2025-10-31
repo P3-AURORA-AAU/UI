@@ -47,15 +47,15 @@ export default function Terminal() {
                     ))}
                 </div>
 
-                <form onSubmit={handleSubmit} className={"p-2 border-t bg-secondary/30"}>
+                <form onSubmit={handleSubmit} className={"py-2 px-4 border-t bg-secondary/30"}>
                     <div className={"flex gap-2"}>
-                        <span>{">"}</span>
+                        <span className={"pt-[3px]"}>{">"}</span>
                         <Input
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder={"Enter command..."}
                             className={"h-7 border-0 focus-visible:ring-0 text-xs font-mono text-foreground" +
-                                " placeholder:text-muted-foreground px-0"}
+                                " placeholder:text-muted-foreground px-0 pb-0 pt-1"}
                         />
                     </div>
                 </form>

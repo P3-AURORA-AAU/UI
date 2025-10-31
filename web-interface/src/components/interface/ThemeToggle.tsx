@@ -2,7 +2,7 @@
 
 import {Moon, AlertTriangle} from "lucide-react"
 import {useEffect, useState} from "react"
-import StyledButton from "@/components/general/StyledButton.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 export function ThemeToggle() {
     const [theme, setTheme] = useState<"light" | "dark">("dark")
@@ -24,7 +24,8 @@ export function ThemeToggle() {
     }
 
     return (
-        <StyledButton
+        <Button
+            variant={"outline"}
             onClick={toggleTheme}
             aria-label="Toggle theme"
             size={"sm"}
@@ -41,6 +42,6 @@ export function ThemeToggle() {
                     <span className="text-xs font-mono text-foreground">DARK</span>
                 </>
             )}
-        </StyledButton>
+        </Button>
     )
 }
