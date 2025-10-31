@@ -1,8 +1,9 @@
 import Window from "@/components/general/Window.tsx";
 import {type FormEvent, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
+import {TerminalCommands} from "@/lib/commands.ts";
 
-interface TerminalLine {
+export interface TerminalLine {
     // idk what we need here these are just what i could think of
     type: "input" | "output" | "error" | "warning" | "log";
     content: string;
@@ -10,20 +11,42 @@ interface TerminalLine {
 
 export default function Terminal() {
     const [lines, setLines] = useState<TerminalLine[]>([
-        {type: "output", content: "AURORA TERMINAL v0.1"},
+        {type: "output", content: "AURORA TERMINAL v1.0"},
         {type: "output", content: "Type 'help' for commands"},
     ]);
     const [input, setInput] = useState<string>("");
 
-    const handleCommand = (inputText: string) => {
-        // need this when we actually handle the command
-        // const trimmed = inputText.trim().toLowerCase();
+    const handleCommand = async (inputText: string) => {
+        if (inputText.trim() === "") return;
+        const parsedCommand = inputText.trim().toLowerCase().split(" ");
+        const commandText = parsedCommand[0];
+        const args = parsedCommand.slice(1);
 
         // add input to terminal
         setLines((prevState) => [...prevState, {type: "input", content: `> ${inputText}`}]);
 
-        // this is where we are supposed to handle the command, but for now we just write out stuff to test
-        setLines((prevState) => [...prevState, {type: "output", content: "wow you wrote a command, good job!!"}])
+        // check if command exists
+        const command = TerminalCommands.find(command => (
+            command.name === commandText || command.aliases?.includes(commandText)
+        ))
+
+        if (!command) {
+            setLines((prevState) => [...prevState, {type: "error", content: "Command not found"}]);
+            return;
+        }
+
+        const commandResult = command.execute(args)
+        let output: TerminalLine[]
+        // wait if promise
+        if (commandResult instanceof Promise) {
+            output = (await commandResult).lines
+        } else {
+            output = commandResult.lines
+        }
+
+
+        setLines((prevState) => [...prevState, ...output])
+
     }
 
     const handleSubmit = (e: FormEvent) => {
