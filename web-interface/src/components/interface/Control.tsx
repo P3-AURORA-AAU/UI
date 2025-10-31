@@ -1,6 +1,6 @@
 import Window from "@/components/general/Window.tsx";
-import {Button} from "@/components/ui/button.tsx";
 import {ArrowDown, ArrowLeft, ArrowRight, ArrowUp} from "lucide-react";
+import StyledButton from "@/components/general/StyledButton.tsx";
 
 export default function Control() {
     return (
@@ -22,36 +22,21 @@ function Movement() {
             <span className={"text-xs font-mono text-muted-foreground border-b p-1"}>MOVEMENT</span>
             <div className={"grid grid-cols-3 gap-1.5"}>
                 <div/>
-                <Button
-                    variant={"outline"}
-                    className={"h-14 border-primary/50 hover:border-primary hover:bg-primary/20 hover:text-primary" +
-                        " bg-transparent"}
-                >
+                <StyledButton className={"h-14"}>
                     <ArrowUp className={"size-6"}/>
-                </Button>
+                </StyledButton>
                 <div/>
-                <Button
-                    variant={"outline"}
-                    className={"h-14 border-primary/50 hover:border-primary hover:bg-primary/20 hover:text-primary" +
-                        " bg-transparent"}
-                >
+                <StyledButton className={"h-14"}>
                     <ArrowLeft className={"size-6"}/>
-                </Button>
-                <Button
-                    variant={"outline"}
-                    className={"h-14 border-primary/50 hover:border-primary hover:bg-primary/20 hover:text-primary" +
-                        " bg-transparent"}
-                >
+                </StyledButton>
+                <StyledButton className={"h-14"}>
                     <ArrowDown className={"size-6"}/>
-                </Button>
-                <Button
-                    variant={"outline"}
-                    className={"h-14 border-primary/50 hover:border-primary hover:bg-primary/20 hover:text-primary" +
-                        " bg-transparent"}
-                >
+                </StyledButton>
+                <StyledButton className={"h-14"}>
                     <ArrowRight className={"size-6"}/>
-                </Button>
+                </StyledButton>
             </div>
+            <p>Idk put something here ig</p>
         </div>
     )
 }

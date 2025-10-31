@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {ThemeToggle} from "@/components/interface/ThemeToggle.tsx";
 
 export default function Header() {
     const [currentTime, setCurrentTime] = useState(new Date())
@@ -11,7 +12,7 @@ export default function Header() {
     }, [])
 
     return (
-        <header className={"border p-3"}>
+        <header className={"border p-3 bg-card/50 backdrop-blur-sm"}>
             <div className={"flex justify-between items-center"}>
                 {/*left side, basic info in case you forgot where you are*/}
                 <div className={"flex gap-4 items-center"}>
@@ -24,7 +25,9 @@ export default function Header() {
                 </div>
 
                 {/*right side, time because it looks cool idk*/}
-                <div className="text-sm font-mono text-muted-foreground items-center">
+                <div className="text-sm font-mono text-muted-foreground items-center flex gap-4">
+                    <ThemeToggle/>
+                    <div className="h-4 w-px bg-border"/>
                     <p>
                         {currentTime.toLocaleString('dk', {hour12: false}).replace(',', '')}
                     </p>

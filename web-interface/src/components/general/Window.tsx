@@ -9,14 +9,14 @@ export default function Window({
                                    ...props
                                }: React.ComponentProps<"div"> & { title?: string }): JSX.Element {
     return (
-        <Card className={cn("p-0", className)}>
+        <Card className={cn("p-0 flex flex-col", className)}>
             {/*header stuff*/}
             <div className={"border-b p-2 flex items-center gap-2 bg-secondary/30 px-3"}>
                 <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"/>
                 <span className={"font-mono text-xs text-foreground"}>{title}</span>
             </div>
 
-            <div {...props}>
+            <div className={"flex-1"} {...props}>
             </div>
         </Card>
     )
