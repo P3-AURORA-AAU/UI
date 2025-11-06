@@ -22,11 +22,15 @@ function Movement() {
         <div className={"flex flex-col gap-4"}>
             <span className={"text-xs font-mono text-muted-foreground border-b p-1"}>MOVEMENT</span>
             <div className={"grid grid-cols-3 gap-1.5"}>
-                <div/>
+                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                    50%
+                </Button>
                 <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
                     <ArrowUp className={"size-6"}/>
                 </Button>
-                <div/>
+                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                    100%
+                </Button>
                 <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
                     <ArrowLeft className={"size-6"}/>
                 </Button>
@@ -36,8 +40,17 @@ function Movement() {
                 <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
                     <ArrowRight className={"size-6"}/>
                 </Button>
+                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                    IMO
+                </Button>
+                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                    Gyroscope
+                </Button>
+                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                    IDFK
+                </Button>
+                
             </div>
-            <p>Idk put something here ig</p>
         </div>
     )
 }

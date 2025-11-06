@@ -1,0 +1,124 @@
+
+> web-interface@0.0.0 dev
+> vite --host 0.0.0.0
+
+
+  VITE v7.1.12  ready in 471 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.183.166:5173/
+  ➜  Network: http://10.34.126.24:5173/
+14:04:28 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:04:28 [vite] (client) hmr update /src/index.css
+14:04:39 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:04:39 [vite] (client) hmr update /src/index.css
+14:04:50 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:04:50 [vite] (client) hmr update /src/index.css
+14:05:06 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:05:06 [vite] (client) hmr update /src/index.css
+14:06:28 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:06:28 [vite] (client) hmr update /src/index.css
+14:06:34 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:06:34 [vite] (client) hmr update /src/index.css
+14:07:59 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:07:59 [vite] (client) hmr update /src/index.css
+14:08:16 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:08:16 [vite] (client) hmr update /src/index.css
+14:08:27 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:08:27 [vite] (client) hmr update /src/index.css
+14:08:34 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:08:34 [vite] (client) hmr update /src/index.css
+14:08:41 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:08:41 [vite] (client) hmr update /src/index.css
+14:09:56 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:09:56 [vite] (client) hmr update /src/index.css
+14:10:38 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:10:38 [vite] (client) hmr update /src/index.css
+14:10:54 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:10:54 [vite] (client) hmr update /src/index.css
+14:14:56 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:14:56 [vite] (client) hmr update /src/index.css
+14:14:56 [vite] Internal server error: /home/aurora/web-interface/src/components/interface/VideoFeed.tsx: Expected corresponding JSX closing tag for <source>. (8:0)
+
+   6 | <video id="example_video_1" data-setup="{}" control="">
+   7 |     <source src="@/assets/vid.mp4" type="video/mp4">
+>  8 | </video>
+     | ^
+   9 |
+  10 | export default function VideoFeed() {
+  11 |     return (
+  Plugin: vite:react-babel
+  File: /home/aurora/web-interface/src/components/interface/VideoFeed.tsx:8:0
+  6  |  <video id="example_video_1" data-setup="{}" control="">
+  7  |      <source src="@/assets/vid.mp4" type="video/mp4">
+  8  |  </video>
+     |  ^
+  9  |  
+  10 |  export default function VideoFeed() {
+      at constructor (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:4756:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:4727:32)
+      at TypeScriptParserMixin.jsxParseElement (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:4778:17)
+      at TypeScriptParserMixin.parseExprAtom (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:4788:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10895:21)
+      at /home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:9828:39
+      at TypeScriptParserMixin.tryParse (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:6932:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:9828:18)
+      at TypeScriptParserMixin.parseExpressionBase (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10848:23)
+      at /home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10844:39
+      at TypeScriptParserMixin.allowInAnd (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:12495:16)
+      at TypeScriptParserMixin.parseExpression (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10844:17)
+      at TypeScriptParserMixin.parseStatementContent (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:12971:23)
+      at TypeScriptParserMixin.parseStatementContent (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/home/aurora/web-interface/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/home/aurora/web-interface/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/home/aurora/web-interface/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/home/aurora/web-interface/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/home/aurora/web-interface/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/home/aurora/web-interface/node_modules/gensync/index.js:261:32)
+      at /home/aurora/web-interface/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/home/aurora/web-interface/node_modules/gensync/index.js:223:11)
+      at /home/aurora/web-interface/node_modules/gensync/index.js:189:28
+      at /home/aurora/web-interface/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /home/aurora/web-interface/node_modules/gensync/index.js:113:33
+      at step (/home/aurora/web-interface/node_modules/gensync/index.js:287:14)
+      at /home/aurora/web-interface/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/home/aurora/web-interface/node_modules/gensync/index.js:223:11)
+14:15:23 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:15:23 [vite] (client) hmr update /src/index.css
+14:15:25 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:15:25 [vite] (client) hmr update /src/index.css
+14:16:22 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:16:22 [vite] (client) hmr update /src/index.css
+14:16:28 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:16:28 [vite] (client) hmr update /src/index.css
+14:21:18 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:21:18 [vite] (client) hmr update /src/index.css
+14:21:53 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:21:53 [vite] (client) hmr update /src/index.css
+14:22:00 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:22:00 [vite] (client) hmr update /src/index.css
+14:22:36 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:22:36 [vite] (client) hmr update /src/index.css
+14:24:32 [vite] (client) hmr update /src/index.css, /src/components/interface/VideoFeed.tsx
+14:24:32 [vite] (client) hmr update /src/index.css

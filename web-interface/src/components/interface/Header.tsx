@@ -17,8 +17,8 @@ export default function Header() {
                 {/*left side, basic info in case you forgot where you are*/}
                 <div className={"flex gap-4 items-center"}>
                     <div className={"flex gap-2 items-center"}>
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"/>
-                        <span className={"text-sm text-foreground font-mono"}>SYSTEM ONLINE</span>
+                        <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"/>
+                        <span className={"text-sm text-foreground font-mono"}>SYSTEM OFFLINE</span>
                     </div>
                     <div className="h-4 w-px bg-border"/>
                     <h1 className={"font-mono text-primary text-lg tracking-wider"}>AURORA_CONTROL_v0.3</h1>
