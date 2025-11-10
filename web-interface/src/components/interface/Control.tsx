@@ -40,6 +40,8 @@ function Movement() {
                 <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
                     <ArrowRight className={"size-6"}/>
                 </Button>
+            </div>
+            <div className={"grid grid-cols-3 gap-1.5"}>
                 <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
                     IMO
                 </Button>
@@ -49,7 +51,6 @@ function Movement() {
                 <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
                     IDFK
                 </Button>
-                
             </div>
         </div>
     )
