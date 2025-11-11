@@ -1,5 +1,5 @@
 import Window from "@/components/general/Window.tsx";
-import {type FormEvent, useState} from "react";
+import {type FormEvent, useEffect, useRef, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {TerminalCommands} from "@/lib/commands.ts";
 
@@ -15,6 +15,13 @@ export default function Terminal() {
         {type: "output", content: "Type 'help' for commands"},
     ]);
     const [input, setInput] = useState<string>("");
+    const scrollRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+        }
+    }, [lines])
 
     const handleCommand = async (inputText: string) => {
         if (inputText.trim() === "") return;
@@ -60,7 +67,7 @@ export default function Terminal() {
         <div className={"flex-1 flex flex-col"}>
             <Window title={"TERMINAL"} className={"gap-0"}>
                 <div className={"flex flex-col h-full"}>
-                    <div className={"font-mono overflow-y-auto text-xs  p-3 flex-1 max-h-56 scrollbar-thin" +
+                    <div ref={scrollRef} className={"font-mono overflow-y-auto text-xs  p-3 flex-1 max-h-56 scrollbar-thin" +
                         " scrollbar-track-background scrollbar-thumb-primary/50"}>
                         {lines.map((line, i) => (
                             <div key={i} className={

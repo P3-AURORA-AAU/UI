@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {Button} from "@/components/ui/button.tsx";
 
 export function ThemeToggle() {
-    const [theme, setTheme] = useState<"light" | "dark">("dark")
+    const [theme, setTheme] = useState<"light" | "dark">("light")
 
     useEffect(() => {
         // Check localStorage on mount
@@ -13,6 +13,8 @@ export function ThemeToggle() {
         if (savedTheme) {
             setTheme(savedTheme)
             document.documentElement.classList.toggle("light", savedTheme === "light")
+        } else {
+            document.documentElement.classList.add("light")
         }
     }, [])
 
