@@ -16,7 +16,7 @@ export default function Interface() {
                     </div>
 
                     {/*right column*/}
-                    <div className={"space-y-4 flex flex-col "}>
+                    <div className={"space-y-4 grid grid-flow-col grid-rows-2"}>
                         <InfoPanel/>
                         <Terminal/>
                     </div>
