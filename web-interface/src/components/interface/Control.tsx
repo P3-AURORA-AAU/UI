@@ -1,7 +1,8 @@
 import Window from "@/components/general/Window.tsx";
-import {ArrowDown, ArrowLeft, ArrowRight, ArrowUp} from "lucide-react";
+import {ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Lock, Unlock} from "lucide-react";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {useState} from "react";
 
 export default function Control() {
     return (
@@ -18,39 +19,63 @@ export default function Control() {
 }
 
 function Movement() {
+    const [isFullSpeed, setIsFullSpeed] = useState(true)
+    const [isMovementLocked, setIsMovementLocked] = useState(false)
+
     return (
-        <div className={"flex flex-col gap-4"}>
+        <div className={"flex flex-col gap-4 justify-between pb-4"}>
             <span className={"text-xs font-mono text-muted-foreground border-b p-1"}>MOVEMENT</span>
             <div className={"grid grid-cols-3 gap-1.5"}>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
-                    50%
-                </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                <div/>
+                <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <ArrowUp className={"size-6"}/>
                 </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
-                    100%
-                </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                <div/>
+                <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <ArrowLeft className={"size-6"}/>
                 </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <ArrowDown className={"size-6"}/>
                 </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
+                <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <ArrowRight className={"size-6"}/>
                 </Button>
             </div>
-            <div className={"grid grid-cols-3 gap-1.5"}>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
-                    IMO
-                </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
-                    Gyroscope
-                </Button>
-                <Button variant={"outline"} className={"h-10 text-muted-foreground"}>
-                    IDFK
-                </Button>
+            <div>
+                <div className={"flex gap-2"}>
+                    <button
+                        onClick={() => setIsFullSpeed(!isFullSpeed)}
+                        className={`flex-1 relative h-16 border-2 transition-all hover:bg-primary/20 ${
+                            isFullSpeed
+                                ? "border-primary bg-primary/10 hover:bg-primary/20"
+                                : "border-primary/50 bg-transparent hover:bg-primary/10"
+                        }`}
+                    >
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-lg font-mono font-bold text-primary whitespace-break-spaces">Speed: {isFullSpeed ? "100%" : "50% "}</span>
+                        </div>
+                        <div
+                            className={`absolute top-1 bottom-1 w-1/2 bg-primary/30 transition-transform duration-300 ${
+                                isFullSpeed ? "translate-x-[calc(100%-0.2rem)]" : "translate-x-[0.2rem]"
+                            }`}
+                        />
+                    </button>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className={`h-16 w-16 shrink-0 transition-all ${
+                            isMovementLocked
+                                ? "border-destructive bg-destructive/20 text-destructive/70 hover:text-destructive hover:bg-destructive/30 hover:border-destructive active:hover:bg-destructive/50"
+                                : ""
+                        }`}
+                        onClick={() => setIsMovementLocked(!isMovementLocked)}
+                    >
+                        {isMovementLocked ? <Lock className="h-6 w-6" /> : <Unlock className="h-6 w-6" />}
+                    </Button>
+                </div>
+                <div className="text-[10px] font-mono text-muted-foreground text-center mt-2">
+                    {isMovementLocked ? "MOVEMENT LOCKED" : "MOVEMENT UNLOCKED"}
+                </div>
             </div>
         </div>
     )

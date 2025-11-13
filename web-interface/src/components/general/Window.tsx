@@ -15,7 +15,7 @@ export default function Window({
 
     return (
         <Card className={cn(
-            "p-0 flex flex-col transition-all duration-300",
+            "p-0 flex flex-col transition-all duration-300 overflow-hidden",
             enabled ? "flex-1 gap-6" : "gap-0",
             className
         )}>
@@ -26,10 +26,7 @@ export default function Window({
                         "w-1.5 h-1.5 rounded-full animate-pulse transition-all duration-300",
                         enabled ? "bg-primary" : "bg-destructive"
                     )}/>
-                    <span className={cn(
-                        "font-mono text-xs text-foreground transition-all duration-300",
-                        enabled ? "text-foregroun" : "text-muted-foreground"
-                    )}>{title}</span>
+                    <span className={"font-mono text-xs text-foreground transition-all duration-300"}>{title}</span>
                 </div>
                 <Button className={"h-4"} variant={"ghost"} size={"sm"} onClick={() => setEnabled(!enabled)}>
                     { enabled ? <Minus /> : <Plus />}
