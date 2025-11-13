@@ -7,22 +7,22 @@
 
 :root {
     --background: oklch(0.08 0.02 300);
-    --foreground: oklch(0.75 0.08 320);
+    --foreground: oklch(0.82 0.08 320);
     --card: oklch(0.12 0.02 300);
-    --card-foreground: oklch(0.75 0.08 320);
+    --card-foreground: oklch(0.82 0.08 320);
     --popover: oklch(0.12 0.02 300);
-    --popover-foreground: oklch(0.75 0.08 320);
+    --popover-foreground: oklch(0.82 0.08 320);
     --primary: oklch(0.65 0.15 320);
     --primary-foreground: oklch(0.08 0.02 300);
     --secondary: oklch(0.18 0.02 300);
-    --secondary-foreground: oklch(0.75 0.08 320);
+    --secondary-foreground: oklch(0.82 0.08 320);
     --muted: oklch(0.18 0.02 300);
-    --muted-foreground: oklch(0.45 0.05 320);
+    --muted-foreground: oklch(0.55 0.05 320);
     --accent: oklch(0.55 0.18 340);
     --accent-foreground: oklch(0.08 0.02 300);
     --destructive: oklch(0.55 0.18 25);
     --destructive-foreground: oklch(0.95 0 0);
-    --border: oklch(0.25 0.03 320);
+    --border: oklch(0.32 0.03 320);
     --input: oklch(0.18 0.02 300);
     --ring: oklch(0.65 0.15 320);
     --chart-1: oklch(0.646 0.222 320);
@@ -172,7 +172,7 @@
 
 @layer utilities {
     .grid-pattern {
-        background-image: linear-gradient(oklch(0.25 0.03 320 / 0.3) 1px, transparent 1px),
+        background-image: linear-gradient(oklch(0.25 0.03 320 / 0.5) 1px, transparent 1px),
         linear-gradient(90deg, oklch(0.25 0.03 320 / 0.3) 1px, transparent 1px);
         background-size: 20px 20px;
     }
