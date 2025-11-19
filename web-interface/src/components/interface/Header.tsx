@@ -1,8 +1,13 @@
 import {useEffect, useState} from "react";
 import {ThemeToggle} from "@/components/interface/ThemeToggle.tsx";
+import {cn} from "@/lib/utils.ts";
 
-export default function Header() {
-    const [currentTime, setCurrentTime] = useState(new Date())
+interface Props {
+    isConnected: boolean;
+}
+
+export default function Header({isConnected}: Props) {
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -17,8 +22,11 @@ export default function Header() {
                 {/*left side, basic info in case you forgot where you are*/}
                 <div className={"flex gap-4 items-center"}>
                     <div className={"flex gap-2 items-center"}>
-                        <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"/>
-                        <span className={"text-sm text-foreground font-mono"}>SYSTEM OFFLINE</span>
+                        <div className={cn(
+                            "w-2 h-2 rounded-full animate-pulse",
+                            isConnected ? "bg-primary" : "bg-destructive"
+                            )}/>
+                        <span className={"text-sm text-foreground font-mono"}>{isConnected ? "SYSTEM ONLINE" : "SYSTEM OFFLINE"}</span>
                     </div>
                     <div className="h-4 w-px bg-border"/>
                     <h1 className={"font-mono text-primary text-lg tracking-wider"}>AURORA_CONTROL_v0.4</h1>
