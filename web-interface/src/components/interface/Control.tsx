@@ -1,5 +1,5 @@
 import Window from "@/components/general/Window.tsx";
-import {ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Lock, Unlock} from "lucide-react";
+import {ArrowDown, ArrowLeft, ArrowRight, ArrowUp, CircleQuestionMark, Lock, Unlock} from "lucide-react";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useState} from "react";
@@ -26,11 +26,24 @@ function Movement() {
         <div className={"flex flex-col gap-4 justify-between pb-4"}>
             <span className={"text-xs font-mono text-muted-foreground border-b p-1"}>MOVEMENT</span>
             <div className={"grid grid-cols-3 gap-1.5"}>
-                <div/>
+                <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
+                    <CircleQuestionMark className={"size-6"}/>
+                </Button>
                 <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <ArrowUp className={"size-6"}/>
                 </Button>
-                <div/>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    className={`h-10 w-auto shrink-0 transition-all ${
+                        isMovementLocked
+                            ? "border-destructive bg-destructive/20 text-destructive/70 hover:text-destructive hover:bg-destructive/30 hover:border-destructive active:hover:bg-destructive/50"
+                            : ""
+                    }`}
+                    onClick={() => setIsMovementLocked(!isMovementLocked)}
+                >
+                    {isMovementLocked ? <Lock className="h-6 w-6" /> : <Unlock className="h-6 w-6" />}
+                </Button>
                 <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <ArrowLeft className={"size-6"}/>
                 </Button>
@@ -60,18 +73,6 @@ function Movement() {
                             }`}
                         />
                     </button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className={`h-16 w-16 shrink-0 transition-all ${
-                            isMovementLocked
-                                ? "border-destructive bg-destructive/20 text-destructive/70 hover:text-destructive hover:bg-destructive/30 hover:border-destructive active:hover:bg-destructive/50"
-                                : ""
-                        }`}
-                        onClick={() => setIsMovementLocked(!isMovementLocked)}
-                    >
-                        {isMovementLocked ? <Lock className="h-6 w-6" /> : <Unlock className="h-6 w-6" />}
-                    </Button>
                 </div>
                 <div className="text-[10px] font-mono text-muted-foreground text-center mt-2">
                     {isMovementLocked ? "MOVEMENT LOCKED" : "MOVEMENT UNLOCKED"}
