@@ -3,16 +3,19 @@ import VideoFeed from "@/components/interface/VideoFeed.tsx";
 import InfoPanel from "@/components/interface/InfoPanel.tsx";
 import Terminal from "@/components/interface/Terminal.tsx";
 import Control from "@/components/interface/Control.tsx";
+import {useRoverWebSocket} from "@/hooks/useRoverWebsockets.ts";
 
 export default function Interface() {
+    const {isConnected, cameraData} = useRoverWebSocket();
+
     return (
         <div className={"h-screen w-screen p-4 bg-background grid-pattern"}>
             <div className={"container mx-auto space-y-4"}>
-                <Header/>
+                <Header isConnected={isConnected}/>
                 <div className={"grid grid-cols-3 gap-4"}>
                     {/*left column*/}
                     <div className={"col-span-2 space-y-4"}>
-                        <VideoFeed/>
+                        <VideoFeed data={cameraData}/>
                     </div>
 
                     {/*right column*/}
