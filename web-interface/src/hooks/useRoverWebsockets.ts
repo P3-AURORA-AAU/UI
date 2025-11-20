@@ -20,7 +20,7 @@ export function useRoverWebSocket() {
 
     useEffect(() => {
         // setup websocket connection
-        ws.current = new WebSocket("ws://localhost:8000/ws"); // or whatever port we have it on
+        ws.current = new WebSocket("ws://localhost:8000/camera"); // or whatever port we have it on
         console.log("Connecting to WebSocket server...");
 
         ws.current.onopen = () => {
