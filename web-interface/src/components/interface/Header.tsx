@@ -24,7 +24,7 @@ export default function Header({isConnected}: Props) {
                     <div className={"flex gap-2 items-center"}>
                         <div className={cn(
                             "w-2 h-2 rounded-full animate-pulse",
-                            isConnected ? "bg-primary" : "bg-destructive"
+                            isConnected ? "bg-green-400/50" : "bg-destructive"
                             )}/>
                         <span className={"text-sm text-foreground font-mono"}>{isConnected ? "SYSTEM ONLINE" : "SYSTEM OFFLINE"}</span>
                     </div>
