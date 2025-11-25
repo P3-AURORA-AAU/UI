@@ -6,7 +6,7 @@ import Control from "@/components/interface/Control.tsx";
 import {useRoverWebSocket} from "@/hooks/useRoverWebsockets.ts";
 
 export default function Interface() {
-    const {isConnected, cameraData} = useRoverWebSocket();
+    const {isConnected, cameraData, changeSPeed, moveRover} = useRoverWebSocket();
 
     return (
         <div className={"h-screen w-screen p-4 bg-background grid-pattern"}>
@@ -25,7 +25,7 @@ export default function Interface() {
                     </div>
 
                     <div className={"col-span-3"}>
-                        <Control/>
+                        <Control changeSpeed={changeSPeed} moveRover={moveRover}/>
                     </div>
                 </div>
             </div>
