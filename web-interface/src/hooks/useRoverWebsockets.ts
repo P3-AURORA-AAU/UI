@@ -24,7 +24,7 @@ export function useRoverWebSocket() {
         console.log("Connecting to WebSocket server...");
 
         ws.current.onopen = () => {
-            setIsConnected(true);
+            setIsConnected(true);2
             console.log("Connected to WebSocket server"); // debug stuff waow
         };
 
