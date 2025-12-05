@@ -192,7 +192,10 @@ function Movement({moveRover, changeSpeed}: Props) {
             <div>
                 <div className={"flex gap-2"}>
                     <button
-                        onClick={() => setIsFullSpeed(!isFullSpeed)}
+                        onClick={() => {
+                            setIsFullSpeed(!isFullSpeed);
+                            changeSpeed(isFullSpeed ? "50%" : "100%");
+                        }}
                         className={`flex-1 relative h-16 border-2 transition-all hover:bg-primary/20 ${
                             isFullSpeed
                                 ? "border-primary bg-primary/10 hover:bg-primary/20"

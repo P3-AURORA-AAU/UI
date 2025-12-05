@@ -15,6 +15,10 @@ export interface MoveData {
     direction: string;
 }
 
+export interface SpeedData {
+
+}
+
 export function useRoverWebSocket() {
     const [sensorData, setSensorData] = useState<SensorData | null>(null);
     const [cameraData, setCameraData] = useState<CameraData | null>(null);
