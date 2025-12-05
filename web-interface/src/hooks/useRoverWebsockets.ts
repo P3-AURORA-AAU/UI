@@ -1,15 +1,18 @@
-
+import {useEffect, useRef, useState} from "react";
 
 // interfaces for message types
 // TODO: actually make these lol
-import {useEffect, useRef, useState} from "react";
-
 interface SensorData {
     temperature: number;
 }
 
 interface CameraData {
     image: string;
+}
+
+export interface MoveData {
+    // "forward" | "backwards" | "left" | "right" | "forward_left" | "forward_right" | "backwards_left" | "backwards_right" | "none"
+    direction: string;
 }
 
 export function useRoverWebSocket() {
@@ -24,7 +27,7 @@ export function useRoverWebSocket() {
         console.log("Connecting to WebSocket server...");
 
         ws.current.onopen = () => {
-            setIsConnected(true);2
+            setIsConnected(true);
             console.log("Connected to WebSocket server"); // debug stuff waow
         };
 
@@ -59,17 +62,19 @@ export function useRoverWebSocket() {
     }, []);
 
     // helper function for sending commands
-    function sendCommand(type: string, data: Record<string, unknown>) {
+    function sendCommand(type: string, data: unknown) {
+        console.log(`Sending command: ${type} - ${JSON.stringify(data)}`);
+
         if (ws.current && isConnected) {
-            ws.current.send(JSON.stringify({type, ...data}));
+            ws.current.send(JSON.stringify({type, data}));
         }
     }
 
     // functions for making the rover do stuff
     // TODO: Make types for these
-    const moveRover = (direction: string) => sendCommand("move_rover", {direction: direction});
-    const changeSPeed = (speed: string) => sendCommand("change_speed", {speed: speed});
+    const moveRover = (moveData: MoveData) => sendCommand("move_rover", moveData);
+    const changeSpeed = (speed: string) => sendCommand("change_speed", {speed: speed});
 
-    return { sensorData, cameraData, isConnected, moveRover, changeSPeed };
+    return { sensorData, cameraData, isConnected, moveRover, changeSpeed: changeSpeed };
 }
 

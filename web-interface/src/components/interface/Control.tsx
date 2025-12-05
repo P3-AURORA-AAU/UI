@@ -4,9 +4,10 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx
 import {Button} from "@/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {cn} from "@/lib/utils.ts";
+import type {MoveData} from "@/hooks/useRoverWebsockets.ts";
 
 interface Props {
-    moveRover: (direction: string) => void;
+    moveRover: (moveData: MoveData) => void;
     changeSpeed: (speed: string) => void;
 }
 
@@ -62,7 +63,7 @@ function Movement({moveRover, changeSpeed}: Props) {
         if (newDirectionString !== directionString) {
             setDirectionString(newDirectionString);
             console.log("new direction string: " + newDirectionString)
-            moveRover(newDirectionString);
+            moveRover({direction: newDirectionString});
         }
     }, [movementDirections, directionString])
 
