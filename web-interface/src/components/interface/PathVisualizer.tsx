@@ -1,6 +1,8 @@
 import Window from "@/components/general/Window.tsx";
-import {useEffect, useRef, useState} from "react";
+import {type RefObject, useEffect, useRef, useState} from "react";
 import { Stage, Layer, Rect, Circle, Line } from "react-konva";
+import type {TerminalRef} from "@/components/interface/Terminal.tsx";
+
 
 export interface PathData {
     grid: number[][];
@@ -11,9 +13,10 @@ export interface PathData {
 
 interface PathVisualizationProps {
     data: PathData | null;
+    terminalRef: RefObject<TerminalRef>;
 }
 
-export default function PathVisualizer({data}: PathVisualizationProps) {
+export default function PathVisualizer({data, terminalRef}: PathVisualizationProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [canvasSize, setCanvasSize] = useState({width: 100, height: 100});
 
@@ -48,7 +51,7 @@ export default function PathVisualizer({data}: PathVisualizationProps) {
         <Window title={"PATH_FINDING"} className={"gap-0"}>
             <div className={"flex-1 flex items-center justify-center h-full"} ref={containerRef}>
                 {/* konva stage for the visual stuff */}
-                <MapCanvas data={data} canvasSize={canvasSize}/>
+                <MapCanvas data={data} canvasSize={canvasSize} terminalRef={terminalRef}/>
             </div>
         </Window>
     )
@@ -57,11 +60,11 @@ export default function PathVisualizer({data}: PathVisualizationProps) {
 interface MapCanvasProps {
     data: PathData | null;
     canvasSize: {width: number; height: number};
+    terminalRef: RefObject<TerminalRef>;
 }
 
-function MapCanvas(props: MapCanvasProps) {
+function MapCanvas({data, canvasSize, terminalRef} : MapCanvasProps) {
     const [hoveredCell, setHoveredCell] = useState<string | null>(null);
-    const {data, canvasSize} = props;
 
     if (!data) return null;
 
@@ -73,6 +76,9 @@ function MapCanvas(props: MapCanvasProps) {
 
     // helper functions
     const getCellKey = (r: number, c: number) => `${r},${c}`;
+    const setDestination = (x: number, y: number) => {
+        terminalRef.current?.executeCommand(`destination ${x} ${y}`, false)
+    }
 
     return (
         <Stage width={canvasSize.width} height={canvasSize.height}>
@@ -96,6 +102,7 @@ function MapCanvas(props: MapCanvasProps) {
                                 strokeWidth={1}
                                 onMouseEnter={() => setHoveredCell(key)}
                                 onMouseLeave={() => setHoveredCell(null)}
+                                onClick={() => setDestination(c, r)}
                             />
                         )
                     })
@@ -144,7 +151,6 @@ function MapCanvas(props: MapCanvasProps) {
                             stroke={getComputedStyle(document.documentElement).getPropertyValue('--primary')}
                             strokeWidth={2}
                             listening={false}
-
                         />
                     );
                 })()}

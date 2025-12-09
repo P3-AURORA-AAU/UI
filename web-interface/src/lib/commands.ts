@@ -73,7 +73,7 @@ export const TerminalCommands: Command[] = [
             return {
                 lines: [
                     ...prevState,
-                    {type: "output", content: `Destination set to ${args?.join(" ") ?? "nothing lol"}`},
+                    {type: "output", content: `Destination set to ${args?.join(",") ?? "nothing lol"}`},
                 ]
             }
         }

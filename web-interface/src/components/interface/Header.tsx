@@ -29,7 +29,7 @@ export default function Header({isConnected}: Props) {
                         <span className={"text-sm text-foreground font-mono"}>{isConnected ? "SYSTEM ONLINE" : "SYSTEM OFFLINE"}</span>
                     </div>
                     <div className="h-4 w-px bg-border"/>
-                    <h1 className={"font-mono text-primary text-lg tracking-wider"}>AURORA_CONTROL_v0.4</h1>
+                    <h1 className={"font-mono text-primary text-lg tracking-wider"}>AURORA_CONTROL_v0.7</h1>
                 </div>
 
                 {/*right side, time because it looks cool idk*/}

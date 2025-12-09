@@ -1,12 +1,13 @@
 import Header from "@/components/interface/Header.tsx";
 import VideoFeed from "@/components/interface/VideoFeed.tsx";
-import InfoPanel from "@/components/interface/InfoPanel.tsx";
-import Terminal from "@/components/interface/Terminal.tsx";
+import Terminal, {type TerminalRef} from "@/components/interface/Terminal.tsx";
 import Control from "@/components/interface/Control.tsx";
 import {useRoverWebSocket} from "@/hooks/useRoverWebsockets.ts";
 import PathVisualizer, {type PathData} from "@/components/interface/PathVisualizer.tsx";
+import {useRef} from "react";
 
 export default function Interface() {
+    const terminalRef = useRef<TerminalRef>(null);
     const {isConnected, cameraData, changeSpeed, moveRover} = useRoverWebSocket();
     
     const testPathData: PathData = {
@@ -39,8 +40,8 @@ export default function Interface() {
 
                     {/*right column*/}
                     <div className={"space-y-4 grid grid-flow-col grid-rows-2"}>
-                        <PathVisualizer data={testPathData}/>
-                        <Terminal/>
+                        <PathVisualizer data={testPathData} terminalRef={terminalRef}/>
+                        <Terminal ref={terminalRef}/>
                     </div>
 
                     <div className={"col-span-3"}>

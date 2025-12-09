@@ -1,5 +1,5 @@
 import Window from "@/components/general/Window.tsx";
-import {type FormEvent, useEffect, useRef, useState} from "react";
+import {type FormEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {TerminalCommands} from "@/lib/commands.ts";
 
@@ -9,9 +9,14 @@ export interface TerminalLine {
     content: string;
 }
 
-export default function Terminal() {
+// for calling commands from outside the terminal
+export interface TerminalRef {
+    executeCommand: (command: string, showInput?: boolean) => Promise<void>;
+}
+
+export default forwardRef<TerminalRef>(function Terminal(_, ref) {
     const [lines, setLines] = useState<TerminalLine[]>([
-        {type: "output", content: "AURORA TERMINAL v1.2"},
+        {type: "output", content: "AURORA TERMINAL v1.3"},
         {type: "output", content: "Type 'help' for commands"},
     ]);
     const [input, setInput] = useState<string>("");
@@ -23,14 +28,16 @@ export default function Terminal() {
         }
     }, [lines])
 
-    const handleCommand = async (inputText: string) => {
+    const handleCommand = async (inputText: string, showInput: boolean = true) => {
         if (inputText.trim() === "") return;
         const parsedCommand = inputText.trim().toLowerCase().split(" ");
         const commandText = parsedCommand[0];
         const args = parsedCommand.slice(1);
 
         // add input to terminal
-        const lineWithInput: TerminalLine[] = [...lines, {type: "input", content: `> ${inputText}`}];
+        const lineWithInput: TerminalLine[] = showInput
+            ? [...lines, {type: "input", content: `> ${inputText}`}]
+            : lines;
         setLines(lineWithInput);
 
         // check if command exists
@@ -56,6 +63,11 @@ export default function Terminal() {
         setLines(output)
 
     }
+
+    // expose handleCommand via ref to allow external command execution
+    useImperativeHandle(ref, () => ({
+        executeCommand: handleCommand
+    }));
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -95,4 +107,4 @@ export default function Terminal() {
             </Window>
         </div>
     )
-}
+});
