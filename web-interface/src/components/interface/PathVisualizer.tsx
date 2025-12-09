@@ -2,14 +2,7 @@ import Window from "@/components/general/Window.tsx";
 import {type RefObject, useEffect, useRef, useState} from "react";
 import { Stage, Layer, Rect, Circle, Line } from "react-konva";
 import type {TerminalRef} from "@/components/interface/Terminal.tsx";
-
-
-export interface PathData {
-    grid: number[][];
-    path: [number, number][];
-    start: [number, number];
-    destination: [number, number];
-}
+import type {PathData} from "@/hooks/useRoverWebsockets.ts";
 
 interface PathVisualizationProps {
     data: PathData | null;
@@ -18,24 +11,27 @@ interface PathVisualizationProps {
 
 export default function PathVisualizer({data, terminalRef}: PathVisualizationProps) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [canvasSize, setCanvasSize] = useState({width: 100, height: 100});
+    const [canvasSize, setCanvasSize] = useState({width: 200, height: 200});
 
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
-        console.log("setting up resize observer")
+
+        const { width, height } = container.getBoundingClientRect();
+        setCanvasSize({ width, height });
 
         // watch for resize events using the cool resize observer thingy, and update size when it happens
         const resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 const { width, height } = entry.contentRect;
                 setCanvasSize({ width, height });
+                console.log("resized to " + width + "x" + height);
             }
         });
 
         resizeObserver.observe(container);
         return () => resizeObserver.disconnect();
-    }, [])
+    }, [data])
 
     if (!data) {
         return (

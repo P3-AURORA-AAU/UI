@@ -10,6 +10,13 @@ interface CameraData {
     image: string;
 }
 
+export interface PathData {
+    grid: number[][];
+    path: [number, number][];
+    start: [number, number];
+    destination: [number, number];
+}
+
 export interface MoveData {
     // "forward" | "backwards" | "left" | "right" | "forward_left" | "forward_right" | "backwards_left" | "backwards_right" | "none"
     direction: string;
@@ -21,6 +28,7 @@ export interface SpeedData {
 
 export function useRoverWebSocket() {
     const [sensorData, setSensorData] = useState<SensorData | null>(null);
+    const [pathData, setPathData] = useState<PathData>(null);
     const [cameraData, setCameraData] = useState<CameraData | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const ws = useRef<WebSocket | null>(null);
@@ -49,6 +57,9 @@ export function useRoverWebSocket() {
             switch (message.type) {
                 case 'sensor_data':
                     setSensorData(message.data);
+                    break;
+                case 'path_data':
+                    setPathData(message.data);
                     break;
                 default:
                     console.log("Grrr, unknown message type: ", message.type, " - ", message.data, "");
@@ -82,6 +93,6 @@ export function useRoverWebSocket() {
     const moveRover = (moveData: MoveData) => sendCommand("move_rover", moveData);
     const changeSpeed = (speed: string) => sendCommand("change_speed", {speed: speed});
 
-    return { sensorData, cameraData, isConnected, moveRover, changeSpeed: changeSpeed };
+    return { sensorData, cameraData, isConnected, pathData, moveRover, changeSpeed: changeSpeed };
 }
 

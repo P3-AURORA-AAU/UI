@@ -8,25 +8,25 @@ import {useRef} from "react";
 
 export default function Interface() {
     const terminalRef = useRef<TerminalRef>(null);
-    const {isConnected, cameraData, changeSpeed, moveRover} = useRoverWebSocket();
+    const {isConnected, cameraData, pathData, changeSpeed, moveRover} = useRoverWebSocket();
     
-    const testPathData: PathData = {
-        grid: [
-            [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
-            [0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
-            [0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-            [0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
-            [1, 0, 0, 1, 0, 1, 0, 0, 0, 0]
-        ],
-        path: [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [3, 2], [4, 2], [4, 3], [4, 4]],
-        start: [0, 0],
-        destination: [4, 4]
-    }
+    // const testPathData: PathData = {
+    //     grid: [
+    //         [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
+    //         [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+    //         [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+    //         [0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
+    //         [0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
+    //         [0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+    //         [1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    //         [0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+    //         [0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
+    //         [1, 0, 0, 1, 0, 1, 0, 0, 0, 0]
+    //     ],
+    //     path: [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [3, 2], [4, 2], [4, 3], [4, 4]],
+    //     start: [0, 0],
+    //     destination: [4, 4]
+    // }
 
     return (
         <div className={"h-screen w-screen p-4 bg-background grid-pattern"}>
@@ -40,7 +40,7 @@ export default function Interface() {
 
                     {/*right column*/}
                     <div className={"space-y-4 grid grid-flow-col grid-rows-2"}>
-                        <PathVisualizer data={testPathData} terminalRef={terminalRef}/>
+                        <PathVisualizer data={pathData} terminalRef={terminalRef}/>
                         <Terminal ref={terminalRef}/>
                     </div>
 
