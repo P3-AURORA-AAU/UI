@@ -61,5 +61,21 @@ export const TerminalCommands: Command[] = [
                 {type: "output", content: ""},
             ]
         })
+    },
+    {
+        name: "destination",
+        description: "sets the destination for the path finding",
+        aliases: ["d", "dest"],
+        execute: (prevState, args) => {
+            if (!args || args.length < 2) return {lines: prevState.concat({type: "error", content: "Not enough arguments provided"})}
+            if (args.length > 2) return {lines: prevState.concat({type: "error", content: "Too many arguments"})}
+
+            return {
+                lines: [
+                    ...prevState,
+                    {type: "output", content: `Destination set to ${args?.join(" ") ?? "nothing lol"}`},
+                ]
+            }
+        }
     }
 ]

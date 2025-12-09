@@ -20,7 +20,7 @@ function VideoPlayer({data}: Props) {
     </div>;
     return (
         <div>
-            <img src={`data:image/jpeg;base64,${data.image}`} alt={"camera feed"}/>
+            <img src={data.image} alt={"camera feed"} className={"w-full"}/>
         </div>
     )
 }

@@ -37,21 +37,24 @@ export function useRoverWebSocket() {
 
         // handle messages
         ws.current.onmessage = (event) => {
-            const message = JSON.parse(event.data);
+            // Binary message (camera)
+            if (event.data instanceof Blob) {
+                const url = URL.createObjectURL(event.data);
+                setCameraData({ image: url });
+                return;
+            }
 
-            // route the stuff
+            // JSON message (sensor/other)
+            const message = JSON.parse(event.data);
             switch (message.type) {
                 case 'sensor_data':
                     setSensorData(message.data);
                     break;
-                case 'camera_data':
-                    setCameraData(message.data);
-                    break;
                 default:
                     console.log("Grrr, unknown message type: ", message.type, " - ", message.data, "");
-                    break;
             }
         }
+
 
         // when it dies...
         ws.current.onclose = () => {
@@ -67,7 +70,7 @@ export function useRoverWebSocket() {
 
     // helper function for sending commands
     function sendCommand(type: string, data: unknown) {
-        console.log(`Sending command: ${type} - ${JSON.stringify(data)}`);
+        console.log(`Sending command: ${JSON.stringify({type, data})}`);
 
         if (ws.current && isConnected) {
             ws.current.send(JSON.stringify({type, data}));
