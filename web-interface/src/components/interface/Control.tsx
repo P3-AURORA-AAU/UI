@@ -4,11 +4,13 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx
 import {Button} from "@/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {cn} from "@/lib/utils.ts";
-import type {MoveData} from "@/hooks/useRoverWebsockets.ts";
+import type {MoveData, RoverStatusData} from "@/hooks/useRoverWebsockets.ts";
 
 interface Props {
     moveRover: (moveData: MoveData) => void;
     changeSpeed: (speed: string) => void;
+    roverStatus: RoverStatusData;
+    enableHumanDetection: (enabled: boolean) => void;
 }
 
 export default function Control(props: Props) {
@@ -17,7 +19,7 @@ export default function Control(props: Props) {
             <div className={"h-60"}>
                 <div className={"grid grid-cols-4 gap-4 px-4 h-full"}>
                     <Movement {...props}/>
-                    <System/>
+                    <System enableHumanDetection={props.enableHumanDetection} roverStatus={props.roverStatus}/>
                     <ExpansionModules/>
                 </div>
             </div>
@@ -25,15 +27,14 @@ export default function Control(props: Props) {
     )
 }
 
-function Movement({moveRover, changeSpeed}: Props) {
+function Movement({moveRover, changeSpeed, roverStatus}: Props) {
     interface MovementDirectionsState {
         forward: boolean;
         backwards: boolean;
         left: boolean;
         right: boolean;
     }
-    
-    const [isFullSpeed, setIsFullSpeed] = useState(true)
+
     const [isMovementLocked, setIsMovementLocked] = useState(false)
     const [movementDirections, setMovementDirections] = useState<MovementDirectionsState>({forward: false, backwards: false, left: false, right: false})
     const [directionString, setDirectionString] = useState<string>("none")
@@ -136,9 +137,9 @@ function Movement({moveRover, changeSpeed}: Props) {
                 <Button variant={"outline"} disabled={isMovementLocked} className={"h-10 text-muted-foreground"}>
                     <CircleQuestionMark className={"size-6"}/>
                 </Button>
-                <Button 
-                    variant={"outline"} 
-                    disabled={isMovementLocked} 
+                <Button
+                    variant={"outline"}
+                    disabled={isMovementLocked}
                     className={cn("h-10 text-muted-foreground", movementDirections.forward && "bg-primary/50 text-secondary hover:bg-primary/50 hover:text-secondary border-primary")}
                     onMouseDown={() => setMovementDirections(prev => ({...prev, forward: true}))}
                     onMouseUp={() => setMovementDirections(prev => ({...prev, forward: false}))}
@@ -158,8 +159,8 @@ function Movement({moveRover, changeSpeed}: Props) {
                 >
                     {isMovementLocked ? <Lock className="h-6 w-6" /> : <Unlock className="h-6 w-6" />}
                 </Button>
-                <Button 
-                    variant={"outline"} 
+                <Button
+                    variant={"outline"}
                     disabled={isMovementLocked}
                     className={cn("h-10 text-muted-foreground", movementDirections.left && "bg-primary/50 text-secondary hover:bg-primary/50 hover:text-secondary border-primary")}
                     onMouseDown={() => setMovementDirections(prev => ({...prev, left: true}))}
@@ -168,8 +169,8 @@ function Movement({moveRover, changeSpeed}: Props) {
                 >
                     <ArrowLeft className={"size-6"}/>
                 </Button>
-                <Button 
-                    variant={"outline"} 
+                <Button
+                    variant={"outline"}
                     disabled={isMovementLocked}
                     className={cn("h-10 text-muted-foreground", movementDirections.backwards && "bg-primary/50 text-secondary hover:bg-primary/50 hover:text-secondary border-primary")}
                     onMouseDown={() => setMovementDirections(prev => ({...prev, backwards: true}))}
@@ -178,8 +179,8 @@ function Movement({moveRover, changeSpeed}: Props) {
                 >
                     <ArrowDown className={"size-6"}/>
                 </Button>
-                <Button 
-                    variant={"outline"} 
+                <Button
+                    variant={"outline"}
                     disabled={isMovementLocked}
                     className={cn("h-10 text-muted-foreground", movementDirections.right && "bg-primary/50 text-secondary hover:bg-primary/50 hover:text-secondary border-primary")}
                     onMouseDown={() => setMovementDirections(prev => ({...prev, right: true}))}
@@ -193,21 +194,21 @@ function Movement({moveRover, changeSpeed}: Props) {
                 <div className={"flex gap-2"}>
                     <button
                         onClick={() => {
-                            setIsFullSpeed(!isFullSpeed);
-                            changeSpeed(isFullSpeed ? "50%" : "100%");
+                            changeSpeed(roverStatus.speed === "100%" ? "50%" : "100%");
                         }}
+
                         className={`flex-1 relative h-16 border-2 transition-all hover:bg-primary/20 ${
-                            isFullSpeed
+                            roverStatus.speed === "100%"
                                 ? "border-primary bg-primary/10 hover:bg-primary/20"
                                 : "border-primary/50 bg-transparent hover:bg-primary/10"
                         }`}
                     >
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-lg font-mono font-bold text-primary whitespace-break-spaces">Speed: {isFullSpeed ? "100%" : "50% "}</span>
+                            <span className="text-lg font-mono font-bold text-primary whitespace-break-spaces">Speed: {roverStatus.speed === "100%" ? "100%" : "50% "}</span>
                         </div>
                         <div
                             className={`absolute top-1 bottom-1 w-1/2 bg-primary/30 transition-transform duration-300 ${
-                                isFullSpeed ? "translate-x-[calc(100%-0.2rem)]" : "translate-x-[0.2rem]"
+                                roverStatus.speed === "100%" ? "translate-x-[calc(100%-0.2rem)]" : "translate-x-[0.2rem]"
                             }`}
                         />
                     </button>
@@ -220,10 +221,40 @@ function Movement({moveRover, changeSpeed}: Props) {
     )
 }
 
-function System() {
+interface SystemProps {
+    enableHumanDetection: (enabled: boolean) => void
+    roverStatus: RoverStatusData
+}
+
+function System({ enableHumanDetection, roverStatus }: SystemProps) {
     return (
         <div className={"flex flex-col gap-4 col-span-1"}>
             <span className={"text-xs font-mono text-muted-foreground border-b p-1"}>SYSTEM</span>
+            <div className={"flex flex-col gap-4 mx-2"}>
+                <div className={"grid grid-cols-4 gap-4 items-center"}>
+                    <span className={"col-span-3"}>
+                        Human_Detection
+                    </span>
+                    <button
+                        onClick={() => {
+                            enableHumanDetection(!roverStatus.human_detection);
+                        }}
+
+                        className={`flex-1 relative h-10 border-2 transition-all hover:bg-primary/20 ${
+                            roverStatus.human_detection
+                                ? "border-primary bg-primary/10 hover:bg-primary/20"
+                                : "border-primary/50 bg-transparent hover:bg-primary/10"
+                        }`}
+                    >
+
+                        <div
+                            className={`absolute top-1 bottom-1 w-1/2 transition-all duration-300 ${
+                                roverStatus.human_detection ? "translate-x-[calc(100%-0.2rem)] bg-primary/80" : "translate-x-[0.2rem] bg-primary/30"
+                            }`}
+                        />
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }

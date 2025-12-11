@@ -6,6 +6,11 @@ interface SensorData {
     temperature: number;
 }
 
+export interface RoverStatusData {
+    human_detection: boolean;
+    speed: string;
+}
+
 interface CameraData {
     image: string;
 }
@@ -31,6 +36,7 @@ export function useRoverWebSocket() {
     const [pathData, setPathData] = useState<PathData>(null);
     const [cameraData, setCameraData] = useState<CameraData | null>(null);
     const [isConnected, setIsConnected] = useState(false);
+    const [roverStatus, setRoverStatus] = useState<RoverStatusData>({speed: "100%", human_detection: false});
     const ws = useRef<WebSocket | null>(null);
 
     useEffect(() => {
@@ -60,6 +66,10 @@ export function useRoverWebSocket() {
                     break;
                 case 'path_data':
                     setPathData(message.data);
+                    break;
+                case 'rover_status_data':
+                    setRoverStatus(message.data);
+                    console.log("Rover Status Data:", message.data);
                     break;
                 default:
                     console.log("Grrr, unknown message type: ", message.type, " - ", message.data, "");
@@ -91,8 +101,21 @@ export function useRoverWebSocket() {
     // functions for making the rover do stuff
     // TODO: Make types for these
     const moveRover = (moveData: MoveData) => sendCommand("move_rover", moveData);
-    const changeSpeed = (speed: string) => sendCommand("change_speed", {speed: speed});
+    const changeSpeed = (speed: string) => {
+        setRoverStatus((prevState) => ({
+                ...prevState,
+                speed: speed
+        }))
+        sendCommand("change_speed", {speed: speed});
+    }
+    const enableHumanDetection = (enable: boolean) => {
+        setRoverStatus((prevState) => ({
+            ...prevState,
+            human_detection: enable
+        }))
+        sendCommand("enable_human_detection", {enable: enable});
+    }
 
-    return { sensorData, cameraData, isConnected, pathData, moveRover, changeSpeed: changeSpeed };
+    return { sensorData, cameraData, isConnected, pathData, roverStatus, moveRover, changeSpeed: changeSpeed, enableHumanDetection };
 }
 
