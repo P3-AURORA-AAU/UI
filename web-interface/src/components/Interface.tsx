@@ -8,7 +8,7 @@ import {useRef} from "react";
 
 export default function Interface() {
     const terminalRef = useRef<TerminalRef>(null);
-    const {isConnected, cameraData, pathData, roverStatus, changeSpeed, moveRover, enableHumanDetection} = useRoverWebSocket();
+    const {isConnected, cameraData, pathData, roverStatus, moveRover, enableHumanDetection, enableAutonomousDriving} = useRoverWebSocket();
     
     // const testPathData: PathData = {
     //     grid: [
@@ -45,7 +45,7 @@ export default function Interface() {
                     </div>
 
                     <div className={"col-span-3"}>
-                        <Control changeSpeed={changeSpeed} moveRover={moveRover} roverStatus={roverStatus} enableHumanDetection={enableHumanDetection}/>
+                        <Control moveRover={moveRover} roverStatus={roverStatus} enableHumanDetection={enableHumanDetection} enableAutonomousDriving={enableAutonomousDriving}/>
                     </div>
                 </div>
             </div>

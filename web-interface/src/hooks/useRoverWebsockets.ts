@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 
 // interfaces for message types
 // TODO: actually make these lol
@@ -8,7 +8,7 @@ interface SensorData {
 
 export interface RoverStatusData {
     human_detection: boolean;
-    speed: string;
+    auto_driving: boolean;
 }
 
 interface CameraData {
@@ -27,25 +27,24 @@ export interface MoveData {
     direction: string;
 }
 
-export interface SpeedData {
-
-}
 
 export function useRoverWebSocket() {
     const [sensorData, setSensorData] = useState<SensorData | null>(null);
     const [pathData, setPathData] = useState<PathData>(null);
     const [cameraData, setCameraData] = useState<CameraData | null>(null);
     const [isConnected, setIsConnected] = useState(false);
-    const [roverStatus, setRoverStatus] = useState<RoverStatusData>({speed: "100%", human_detection: false});
+    const [roverStatus, setRoverStatus] = useState<RoverStatusData>({human_detection: false, auto_driving: false});
     const ws = useRef<WebSocket | null>(null);
+    const isConnectedRef = useRef(false);
 
     useEffect(() => {
         // setup websocket connection
-        ws.current = new WebSocket("ws://localhost:8000/ws"); // or whatever port we have it on
+        ws.current = new WebSocket("ws://10.42.7.36:8000/ws"); // or whatever port we have it on
         console.log("Connecting to WebSocket server...");
 
         ws.current.onopen = () => {
             setIsConnected(true);
+            isConnectedRef.current = true;
             console.log("Connected to WebSocket server"); // debug stuff waow
         };
 
@@ -80,6 +79,7 @@ export function useRoverWebSocket() {
         // when it dies...
         ws.current.onclose = () => {
             setIsConnected(false);
+            isConnectedRef.current = false;
             console.log("Disconnected from WebSocket server");
         }
 
@@ -90,32 +90,33 @@ export function useRoverWebSocket() {
     }, []);
 
     // helper function for sending commands
-    function sendCommand(type: string, data: unknown) {
+    const sendCommand = useCallback((type: string, data: unknown) => {
         console.log(`Sending command: ${JSON.stringify({type, data})}`);
 
-        if (ws.current && isConnected) {
+        if (ws.current && isConnectedRef.current) {
             ws.current.send(JSON.stringify({type, data}));
         }
-    }
+    }, []);
 
     // functions for making the rover do stuff
-    // TODO: Make types for these
-    const moveRover = (moveData: MoveData) => sendCommand("move_rover", moveData);
-    const changeSpeed = (speed: string) => {
-        setRoverStatus((prevState) => ({
-                ...prevState,
-                speed: speed
-        }))
-        sendCommand("change_speed", {speed: speed});
-    }
-    const enableHumanDetection = (enable: boolean) => {
+    const moveRover = useCallback(
+        (moveData: MoveData) => sendCommand("move_rover", moveData),
+        [sendCommand]
+    );
+    const enableHumanDetection = useCallback((enable: boolean) => {
         setRoverStatus((prevState) => ({
             ...prevState,
             human_detection: enable
         }))
         sendCommand("enable_human_detection", {enable: enable});
-    }
+    }, [sendCommand]);
+    const enableAutonomousDriving = useCallback((enable: boolean) => {
+        setRoverStatus((prevState) => ({
+            ...prevState,
+            auto_driving: enable
+        }))
+        sendCommand("enable_autonomous_driving", {enable: enable});
+    }, [sendCommand]);
 
-    return { sensorData, cameraData, isConnected, pathData, roverStatus, moveRover, changeSpeed: changeSpeed, enableHumanDetection };
+    return { sensorData, cameraData, isConnected, pathData, roverStatus, moveRover, enableHumanDetection, enableAutonomousDriving };
 }
-
